@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context name="globalBaseContext" type="AppserverIo\Appserver\Application\Application" xmlns="http://www.appserver.io/appserver">
+
+    <!--
+    <params>
+        <param name="cache.dir" type="string">/cache</param>
+        <param name="session.dir" type="string">/session</param>
+    </params>
+    -->
+
+    <classLoaders>
+        <classLoader
+            name="ComposerClassLoader"
+            interface="ClassLoaderInterface"
+            type="AppserverIo\Appserver\Core\ComposerClassLoader"
+            factory="AppserverIo\Appserver\Core\ComposerClassLoaderFactory">
+            <directories>
+                <directory>/vendor</directory>
+            </directories>
+        </classLoader>
+        <classLoader
+            name="DgClassLoader"
+            interface="ClassLoaderInterface"
+            type="AppserverIo\Appserver\Core\DgClassLoader"
+            factory="AppserverIo\Appserver\Core\DgClassLoaderFactory">
+            <params>
+                <param name="environment" type="string">production</param>
+                <param name="enforcementLevel" type="integer">7</param>
+                <param name="typeSafety" type="boolean">1</param>
+                <param name="processing" type="string">exception</param>
+            </params>
+            <directories>
+                <directory enforced="true">/common/classes</directory>
+                <directory enforced="true">/WEB-INF/classes</directory>
+                <directory enforced="true">/META-INF/classes</directory>
+            </directories>
+        </classLoader>
+    </classLoaders>
+
+</context>

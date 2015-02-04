@@ -1,0 +1,16 @@
+{
+    "routes": [
+        {
+            "urlMapping": "/users*",
+            "actionClass": "\\AppserverIo\\Apps\\WhoAmI\\Actions\\UsersAction"
+        },
+        {
+            "urlMapping": "/groups*",
+            "actionClass": "\\AppserverIo\\Apps\\WhoAmI\\Actions\\GroupsAction"
+        },
+        {
+            "urlMapping": "/permissions*",
+            "actionClass": "\\AppserverIo\\Apps\\WhoAmI\\Actions\\PermissionsAction"
+        }
+    ]
+}

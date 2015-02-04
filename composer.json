@@ -1,0 +1,39 @@
+{
+    "name": "appserver-io-apps/who-am-i",
+    "description": "Micro web service which validates user identities",
+    "version": "0.1.0",
+    "require": {
+        "appserver-io/routlt": "0.3.*"
+    },
+    "require-dev": {
+        "appserver-io/build": "0.2.*",
+        "appserver-io-psr/epb": "0.4.*",
+        "appserver-io-psr/servlet": "0.8.*"
+    },
+    "config": {
+        "vendor-dir": "src/vendor"
+    },
+    "autoload": {
+        "psr-0": {
+            "AppserverIo\\Apps\\WhoAmI\\": [
+                "common/classes/",
+                "src/WEB-INF/classes/",
+                "src/META-INF/classes/"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "AppserverIo\\Apps\\WhoAmI\\": [
+            "tests/WEB-INF/classes/",
+            "tests/META-INF/classes/"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Bernhard Wick",
+            "email": "bw@appserver.io"
+        }
+    ]
+}
