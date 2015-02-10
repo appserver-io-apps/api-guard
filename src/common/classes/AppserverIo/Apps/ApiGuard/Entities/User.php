@@ -2,7 +2,7 @@
 
 
 /**
- * \AppserverIo\Apps\WhoAmI\Entities\User
+ * \AppserverIo\Apps\ApiGuard\Entities\User
  *
  * NOTICE OF LICENSE
  *
@@ -13,23 +13,23 @@
  * PHP version 5
  *
  * @author    Bernhard Wick <bw@appserver.io>
- * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io/whoami
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
 
-namespace AppserverIo\Apps\WhoAmI\Entities;
+namespace AppserverIo\Apps\ApiGuard\Entities;
 
-use AppserverIo\Apps\WhoAmI\Interfaces\EntityInterface;
+use AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface;
 
 /**
  * User entity
  *
  * @author    Bernhard Wick <bw@appserver.io>
- * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io/whoami
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
 class User implements EntityInterface
@@ -79,6 +79,48 @@ class User implements EntityInterface
     protected $enabled;
 
     /**
+     * Marks the entity as consistent if set TRUE
+     *
+     * @var boolean $isConsistent
+     */
+    protected $isConsistent;
+
+    /**
+     * Default constructor
+     */
+    public function __construct()
+    {
+        $this->isConsistent = false;
+    }
+
+    /**
+     * Method used to validate the consistency of the object.
+     * We use DbC to do so
+     *
+     * @return null
+     *
+     * @Requires("!empty($this->email)")
+     * @Requires("!empty($this->username)")
+     * @Requires("!empty($this->password)")
+     *
+     * @Ensures("$this->isConsistent()")
+     */
+    public function markConsistent()
+    {
+        $this->isConsistent = true;
+    }
+
+    /**
+     * Whether or not the entity is consistent
+     *
+     * @return boolean
+     */
+    public function isConsistent()
+    {
+        return $this->isConsistent;
+    }
+
+    /**
      * Returns the value of the class member userId.
      *
      * @return integer Holds the value of the class member userId
@@ -117,7 +159,7 @@ class User implements EntityInterface
      *
      * @return void
      *
-     * @ensures is_string(filter_var($this->email, FILTER_VALIDATE_EMAIL))
+     * @Ensures("is_string(filter_var($this->email, FILTER_VALIDATE_EMAIL))")
      */
     public function setEmail($email)
     {
@@ -141,7 +183,7 @@ class User implements EntityInterface
      *
      * @return void
      *
-     * @ensures !empty($this->username)
+     * @Ensures("!empty($this->username)")
      */
     public function setUsername($username)
     {
@@ -187,7 +229,7 @@ class User implements EntityInterface
      *
      * @return void
      *
-     * !empty($this->password)
+     * @Ensures("!empty($this->password)")
      */
     public function setPassword($password)
     {
@@ -210,6 +252,8 @@ class User implements EntityInterface
      * @param boolean $enabled Holds the value for the class member enabled
      *
      * @return void
+     *
+     * @Ensures("is_bool($this->enabled)")
      */
     public function setEnabled($enabled)
     {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * \AppserverIo\Apps\WhoAmI\Actions\UsersAction
+ * \AppserverIo\Apps\ApiGuard\Actions\UsersAction
  *
  * NOTICE OF LICENSE
  *
@@ -12,21 +12,21 @@
  * PHP version 5
  *
  * @author    Bernhard Wick <bw@appserver.io>
- * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io-apps/whoami
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
 
-namespace AppserverIo\Apps\WhoAmI\Actions;
+namespace AppserverIo\Apps\ApiGuard\Actions;
 
 /**
- * <TODO CLASS DESCRIPTION>
+ * Action specifying user specific configuration to use abstract CRUD functionality
  *
  * @author    Bernhard Wick <bw@appserver.io>
- * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io-apps/whoami
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
 class UsersAction extends AbstractCrudAction
@@ -44,5 +44,5 @@ class UsersAction extends AbstractCrudAction
      *
      * @var string TARGET_ENTITY
      */
-    const TARGET_ENTITY = '\AppserverIo\Apps\WhoAmI\Entities\User';
+    const TARGET_ENTITY = '\AppserverIo\Apps\ApiGuard\Entities\User';
 }

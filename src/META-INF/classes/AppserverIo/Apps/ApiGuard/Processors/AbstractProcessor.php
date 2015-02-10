@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\WhoAmI\Processors\AbstractProcessor
+ * AppserverIo\Apps\ApiGuard\Processors\AbstractProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -14,11 +14,14 @@
  * @author    Bernhard Wick <bw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io-apps/example
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\WhoAmI\Processors;
+namespace AppserverIo\Apps\ApiGuard\Processors;
+
+use AppserverIo\Apps\ApiGuard\Interfaces\ConnectorInterface;
+use AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface;
 
 /**
  * A singleton session bean implementation that handles the
@@ -27,10 +30,10 @@ namespace AppserverIo\Apps\WhoAmI\Processors;
  * @author    Bernhard Wick <bw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io-apps/example
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io
  *
- * @invariant $this->isConsistent()
+ * @Invariant("$this->isConsistent()")
  */
 abstract class AbstractProcessor extends \Stackable
 {
@@ -43,9 +46,21 @@ abstract class AbstractProcessor extends \Stackable
     protected $container = array();
 
     /**
-     * @param $instance
+     * Default constructor
      */
-    public function create($instance)
+    public function __construct()
+    {
+        $this->container = array();
+    }
+
+    /**
+     * Will create the instance within our instance store
+     *
+     * @param \AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface $instance The instance to create
+     *
+     * @return null
+     */
+    public function create(EntityInterface $instance)
     {
         $container[$instance->getId()] = $instance;
     }

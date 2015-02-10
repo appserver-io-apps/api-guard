@@ -1,7 +1,7 @@
 <?php
 
 /**
- * \AppserverIo\Apps\WhoAmI\Actions\AbstractCrudAction
+ * \AppserverIo\Apps\ApiGuard\Actions\AbstractCrudAction
  *
  * NOTICE OF LICENSE
  *
@@ -12,47 +12,67 @@
  * PHP version 5
  *
  * @author    Bernhard Wick <bw@appserver.io>
- * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io-apps/whoami
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
 
-namespace AppserverIo\Apps\WhoAmI\Actions;
+namespace AppserverIo\Apps\ApiGuard\Actions;
 
-use AppserverIo\Apps\WhoAmI\Connectors\JsonConnector;
+use AppserverIo\Apps\ApiGuard\Connectors\JsonConnector;
+use AppserverIo\Apps\ApiGuard\Interfaces\ConnectorInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Apps\WhoAmI\Interfaces\ConnectorInterface;
+use AppserverIo\Appserver\Naming\InitialContext;
 
 /**
- * <TODO CLASS DESCRIPTION>
+ * Abstract action which provides basic CRUD functionality
  *
  * @author    Bernhard Wick <bw@appserver.io>
- * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io-apps/whoami
+ * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
 abstract class AbstractCrudAction extends DispatchAction
 {
 
+    /**
+     * The connector used to understand incoming request data
+     *
+     * @var \AppserverIo\Apps\ApiGuard\Interfaces\ConnectorInterface $connector
+     */
     protected $connector;
 
     /**
      * Default constructor
      *
-     * @ensures $this->connector instanceof ConnectorInterface
+     * @Ensures("$this->connector instanceof ConnectorInterface")
      */
     public function __construct()
     {
-        $this->connector = new JsonConnector();
+        // we only support a JSON connector by now
+        $this->setConnector(new JsonConnector());
     }
 
     /**
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest
-     * @return mixed
+     * Getter for our connector instance
+     *
+     * @return \AppserverIo\Apps\ApiGuard\Interfaces\ConnectorInterface
+     */
+    public function getConnector()
+    {
+        return $this->connector;
+    }
+
+    /**
+     * Will return the proxy needed for further instance processing in the persistence container
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The current request
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteProxy
      */
     protected function getProxy(HttpServletRequestInterface $servletRequest)
     {
@@ -61,16 +81,17 @@ abstract class AbstractCrudAction extends DispatchAction
         $initialContext->injectServletRequest($servletRequest);
 
         // lookup and return the requested bean proxy
-        return $initialContext->lookup(static::PROCESSING_PROXY);
+        $proxy = $initialContext->lookup(static::PROCESSING_PROXY);
+        return $proxy;
     }
 
     /**
-     * Dummy action implementation that writes 'Hello World' to the response.
+     * Default action to be executed when browsing the mapped URLs
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return null
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -78,56 +99,74 @@ abstract class AbstractCrudAction extends DispatchAction
     }
 
     /**
-     * Dummy action implementation that writes 'Hello World' to the response.
+     * Action to create an instance
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return null
      */
     public function createAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $instance = $this->connector->getInstance($servletRequest->getBodyStream(), static::TARGET_ENTITY);
+        $instance = $this->connector->instanceFromString($servletRequest->getBodyStream(), static::TARGET_ENTITY);
         $proxy = $this->getProxy($servletRequest);
         $proxy->create($instance);
     }
 
     /**
-     * Dummy action implementation that writes 'Hello World' to the response.
+     * Action to get an instance
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return null
      */
     public function getAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
+        $instance = $this->connector->instanceFromString($servletRequest->getBodyStream(), static::TARGET_ENTITY);
         $proxy = $this->getProxy($servletRequest);
+        $proxy->get($instance);
     }
 
     /**
-     * Dummy action implementation that writes 'Hello World' to the response.
+     * Action to update an instance
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return null
      */
     public function updateAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $servletResponse->appendBodyStream('updateAction');
+        $instance = $this->connector->instanceFromString($servletRequest->getBodyStream(), static::TARGET_ENTITY);
+        $proxy = $this->getProxy($servletRequest);
+        $proxy->update($instance);
     }
 
     /**
-     * Dummy action implementation that writes 'Hello World' to the response.
+     * Action to delete an instance
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return null
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $servletResponse->appendBodyStream('deleteAction');
+        $instance = $this->connector->instanceFromString($servletRequest->getBodyStream(), static::TARGET_ENTITY);
+        $proxy = $this->getProxy($servletRequest);
+        $proxy->delete($instance);
+    }
+
+    /**
+     * Setter for our connector instance
+     *
+     * @param \AppserverIo\Apps\ApiGuard\Interfaces\ConnectorInterface $connector Connector instance to use
+     *
+     * @return null
+     */
+    public function setConnector(ConnectorInterface $connector)
+    {
+        $this->connector = $connector;
     }
 }

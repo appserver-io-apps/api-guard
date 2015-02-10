@@ -2,3 +2,5 @@
 build.properties
 /.idea
 /src/vendor
+composer.lock
+jmeter.log

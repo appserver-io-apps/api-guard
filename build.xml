@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="appserver-io-apps/who-am-i" default="composer-init" basedir=".">
+<project name="appserver-io-apps/api-guard" default="composer-init" basedir=".">
 
     <!-- initialize ENV variable -->
     <property environment="env" />

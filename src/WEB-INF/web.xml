@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://www.appserver.io/appserver">
 
-    <display-name>appserver.io whoami application</display-name>
-    <description>This is the whoami application for the appserver.io servlet engine.</description>
+    <display-name>appserver.io api-guard application</display-name>
+    <description>This is the api-guard application for the appserver.io servlet engine.</description>
 
     <session-config>
-        <session-name>whoami_login</session-name>
-        <session-file-prefix>whoami_session_</session-file-prefix>
+        <session-name>api-guard_login</session-name>
+        <session-file-prefix>api-guard_session_</session-file-prefix>
     </session-config>
 
     <servlet>
