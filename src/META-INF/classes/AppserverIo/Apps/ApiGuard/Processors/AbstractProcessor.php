@@ -22,6 +22,7 @@ namespace AppserverIo\Apps\ApiGuard\Processors;
 
 use AppserverIo\Apps\ApiGuard\Interfaces\ConnectorInterface;
 use AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface;
+use AppserverIo\Apps\ApiGuard\Interfaces\ProcessorInterface;
 
 /**
  * A singleton session bean implementation that handles the
@@ -35,22 +36,22 @@ use AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface;
  *
  * @Invariant("$this->isConsistent()")
  */
-abstract class AbstractProcessor extends \Stackable
+abstract class AbstractProcessor extends \Stackable implements ProcessorInterface
 {
 
     /**
      * Container to store all instances in
      *
-     * @var array $users
+     * @var array $container
      */
-    protected $container = array();
+    protected $container;
 
     /**
      * Default constructor
      */
     public function __construct()
     {
-        $this->container = array();
+        $this->container = new \Stackable();
     }
 
     /**
@@ -62,6 +63,48 @@ abstract class AbstractProcessor extends \Stackable
      */
     public function create(EntityInterface $instance)
     {
-        $container[$instance->getId()] = $instance;
+        if (!isset($this->container[$instance->getId()])) {
+            $this->container[$instance->getId()] = $instance;
+        }
+    }
+
+    /**
+     * Will get the instance from our instance store
+     *
+     * @param string $id The id of the instance to get
+     *
+     * @return \AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface
+     */
+    public function get($id)
+    {
+        if (isset($this->container[$id])) {
+            return $this->container[$id];
+        }
+    }
+
+    /**
+     * Will update the instance within our instance store
+     *
+     * @param \AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface $instance The instance to create
+     *
+     * @return null
+     */
+    public function update(EntityInterface $instance)
+    {
+        $this->container[$instance->getId()] = $instance;
+    }
+
+    /**
+     * Will delete the instance from our instance store
+     *
+     * @param string $id The id of the instance to get
+     *
+     * @return null
+     */
+    public function delete($id)
+    {
+        if (isset($this->container[$id])) {
+            unset($this->container[$id]);
+        }
     }
 }

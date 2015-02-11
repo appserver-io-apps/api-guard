@@ -33,6 +33,22 @@ interface EntityInterface
 {
 
     /**
+     * Returns the value of the class member userId.
+     *
+     * @return string Holds the value of the class member userId
+     */
+    public function getId();
+
+    /**
+     * Sets the value for the class member userId.
+     *
+     * @param string $id Holds the value for the class member userId
+     *
+     * @return void
+     */
+    public function setId($id);
+
+    /**
      * Method used to validate the consistency of the object.
      * We use DbC to do so
      *

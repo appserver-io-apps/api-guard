@@ -38,45 +38,44 @@ class User implements EntityInterface
      * @var integer
      *
      * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
+     * @Column(type="string")
      */
-    protected $id;
+    protected $id = '';
 
     /**
      * @var string
      *
      * @Column(type="string")
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * @var string
      *
      * @Column(type="string")
      */
-    protected $username;
+    protected $username = '';
 
     /**
      * @var string
      *
      * @Column(type="string")
      */
-    protected $userLocale;
+    protected $userLocale = '';
 
     /**
      * @var string
      *
      * @Column(type="string")
      */
-    protected $password;
+    protected $password = '';
 
     /**
      * @var boolean
      *
      * @Column(type="boolean")
      */
-    protected $enabled;
+    protected $enabled = false;
 
     /**
      * Marks the entity as consistent if set TRUE
@@ -123,7 +122,7 @@ class User implements EntityInterface
     /**
      * Returns the value of the class member userId.
      *
-     * @return integer Holds the value of the class member userId
+     * @return string Holds the value of the class member userId
      */
     public function getId()
     {
@@ -133,7 +132,7 @@ class User implements EntityInterface
     /**
      * Sets the value for the class member userId.
      *
-     * @param integer $id Holds the value for the class member userId
+     * @param string $id Holds the value for the class member userId
      *
      * @return void
      */

@@ -123,9 +123,10 @@ abstract class AbstractCrudAction extends DispatchAction
      */
     public function getAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $instance = $this->connector->instanceFromString($servletRequest->getBodyStream(), static::TARGET_ENTITY);
+        $identifier = $this->connector->identifierFromString($servletRequest->getBodyStream());
         $proxy = $this->getProxy($servletRequest);
-        $proxy->get($instance);
+        $instance = $proxy->get($identifier);
+        $servletResponse->appendBodyStream($this->connector->stringFromObject($instance));
     }
 
     /**
@@ -153,9 +154,9 @@ abstract class AbstractCrudAction extends DispatchAction
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $instance = $this->connector->instanceFromString($servletRequest->getBodyStream(), static::TARGET_ENTITY);
+        $identifier = $this->connector->identifierFromString($servletRequest->getBodyStream());
         $proxy = $this->getProxy($servletRequest);
-        $proxy->delete($instance);
+        $proxy->delete($identifier);
     }
 
     /**

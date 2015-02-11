@@ -78,6 +78,11 @@ class JsonConnector implements ConnectorInterface
             }
         }
 
+        // give the instance an id (if not already done)
+        if ($resultInstance->getId() === '') {
+            $resultInstance->setId(sha1($rawData));
+        }
+
         // try to mark the instance as consistent
         $resultInstance->markConsistent();
 
@@ -93,14 +98,17 @@ class JsonConnector implements ConnectorInterface
      */
     public function identifierFromString($rawData)
     {
-
+        $object = json_decode($rawData);
+        if (isset($object->id)) {
+            return $object->id;
+        }
     }
 
     /**
      * Will create a string from an object .
      * This string is readily formatted for transmitting using the connectors protocol
      *
-     * @param \stdClass $object The object to transform into a formatted string
+     * @param object $object The object to transform into a formatted string
      *
      * @return string
      */

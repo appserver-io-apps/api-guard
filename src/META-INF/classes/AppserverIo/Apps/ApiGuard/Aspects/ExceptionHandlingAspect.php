@@ -68,16 +68,16 @@ class ExceptionHandlingAspect
         } catch (ContractExceptionInterface $e) {
             // build up the right format for our response message
             $messageObject = new \stdClass();
-            $messageObject->type = 'error';
-            $messageObject->code = 400;
-            $messageObject->message = 'Invalid request data';
+            $messageObject->error = new \stdClass();
+            $messageObject->error->code = 400;
+            $messageObject->error->message = 'Invalid request data';
             $message = $methodInvocation->getContext()->getConnector()->stringFromObject($messageObject);
 
             // get the servlet response and set the error message
             $parameters = $methodInvocation->getParameters();
             $servletResponse = $parameters['servletResponse'];
             $servletResponse->appendBodyStream($message);
-            $servletResponse->setStatusCode($messageObject->code);
+            $servletResponse->setStatusCode($messageObject->error->code);
         }
     }
 }

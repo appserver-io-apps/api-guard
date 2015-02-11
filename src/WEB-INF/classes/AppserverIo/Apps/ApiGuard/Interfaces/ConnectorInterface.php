@@ -62,7 +62,7 @@ interface ConnectorInterface
      * Will create a string from an object .
      * This string is readily formatted for transmitting using the connectors protocol
      *
-     * @param \stdClass $object The object to transform into a formatted string
+     * @param object $object The object to transform into a formatted string
      *
      * @return string
      */

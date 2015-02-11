@@ -33,6 +33,7 @@ use AppserverIo\Apps\ApiGuard\Entities\User;
  * @link      http://www.appserver.io
  *
  * @Singleton
+ * @Startup
  */
 class UserProcessor extends AbstractProcessor
 {
@@ -42,7 +43,7 @@ class UserProcessor extends AbstractProcessor
      *
      * @return boolean
      */
-    protected function isConsistent()
+    public function isConsistent()
     {
         foreach ($this->container as $user) {
             if (!$user instanceof User) {
