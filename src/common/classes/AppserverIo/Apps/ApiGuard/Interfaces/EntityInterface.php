@@ -29,7 +29,7 @@ namespace AppserverIo\Apps\ApiGuard\Interfaces;
  * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
-interface EntityInterface
+interface EntityInterface extends \JsonSerializable
 {
 
     /**

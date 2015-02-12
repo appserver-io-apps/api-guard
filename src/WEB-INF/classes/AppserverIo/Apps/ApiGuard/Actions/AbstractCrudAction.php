@@ -22,10 +22,10 @@ namespace AppserverIo\Apps\ApiGuard\Actions;
 
 use AppserverIo\Apps\ApiGuard\Connectors\JsonConnector;
 use AppserverIo\Apps\ApiGuard\Interfaces\ConnectorInterface;
+use AppserverIo\Psr\Naming\InitialContext;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Appserver\Naming\InitialContext;
 
 /**
  * Abstract action which provides basic CRUD functionality
