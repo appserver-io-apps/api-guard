@@ -174,7 +174,7 @@ As you can see the method makes use of all three examples made [above](#defining
 * Passing the entity to our storage (over a proxy class)
 
 So every exception resulting from a DbC contract breach will pass this method!
-To not litter exception handling over all actions we might need in our API service (our example only has four but use you imagination) we will use AOP to centralize exception handling.
+To not litter exception handling over all actions we might need in our API service (our example only has four but use your imagination) we will use AOP to centralize exception handling.
 
 We will do so within our AOP `Aspect` class `\AppserverIo\Apps\ApiGuard\Aspects\ExceptionHandlingAspect`:
 
@@ -251,11 +251,12 @@ You can see two things:
 
 First things first, the pointcut; Pointcuts are used to specify certain events at certain places within your applications flow.
 The annotation `@Pointcut("call(\AppserverIo\Apps\ApiGuard\Actions\*->*Action())")` allows us to have a code hook at every call to every action method of every action class we have.
+Let me repeat that: every call to every action method of every action class we have! :)
 
 The advice references the pointcut using the annotation `@Around("pointcut(allActionMethods())")` and wraps around (hence the name `Around`) all specified methods.
 That allows us to catch every DbC exception within any action and handle it in a central way.
 
-Using the automatically passed `$methodInvocation` instance we are able to access the action instance in question and therefor using the connector to append an automatic response.
+Using the automatically passed `$methodInvocation` instance we are able to access the action instance in question and therefore using the connector to append an automatic response.
 
 Tadaa: Automatic validation of client requests using annotations!
 
