@@ -32,8 +32,6 @@ use AppserverIo\Psr\MetaobjectProtocol\Dbc\ContractExceptionInterface;
  * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  *
- * @Stateless
- *
  * @Aspect
  */
 class ExceptionHandlingAspect
