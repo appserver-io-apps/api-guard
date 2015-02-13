@@ -32,7 +32,7 @@ use AppserverIo\Apps\ApiGuard\Interfaces\EntityInterface;
  * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  */
-class User implements EntityInterface
+class User extends AbstractEntity
 {
     /**
      * @var integer
@@ -78,21 +78,6 @@ class User implements EntityInterface
     protected $enabled = false;
 
     /**
-     * Marks the entity as consistent if set TRUE
-     *
-     * @var boolean $isConsistent
-     */
-    protected $isConsistent;
-
-    /**
-     * Default constructor
-     */
-    public function __construct()
-    {
-        $this->isConsistent = false;
-    }
-
-    /**
      * Method used to validate the consistency of the object.
      * We use DbC to do so
      *
@@ -107,16 +92,6 @@ class User implements EntityInterface
     public function markConsistent()
     {
         $this->isConsistent = true;
-    }
-
-    /**
-     * Whether or not the entity is consistent
-     *
-     * @return boolean
-     */
-    public function isConsistent()
-    {
-        return $this->isConsistent;
     }
 
     /**

@@ -9,6 +9,7 @@
         "appserver-io/build": "0.2.*",
         "appserver-io-psr/epb": "0.4.*",
         "appserver-io-psr/servlet": "0.8.*",
+        "appserver-io-psr/naming": "0.2.*",
         "appserver-io-psr/mop": "0.1.*",
         "appserver-io/phar" : "0.1.*"
     },

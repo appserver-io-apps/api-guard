@@ -114,6 +114,6 @@ class JsonConnector implements ConnectorInterface
      */
     public function stringFromObject($object)
     {
-        return json_encode($object);
+        return json_encode($object, 4);
     }
 }
