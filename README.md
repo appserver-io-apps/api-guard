@@ -276,7 +276,7 @@ Will return the message:
 {
     "error": {
         "code": 400,
-        "message": "Invalidrequestdata"
+        "message": "Invalid request data"
     }
 }
 ```
