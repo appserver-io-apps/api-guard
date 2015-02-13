@@ -1,17 +1,17 @@
 {
     "name": "appserver-io-apps/api-guard",
     "description": "Micro web service with auto-validation of input and automatic",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "require": {
-        "appserver-io/routlt": "0.3.*"
+        "appserver-io/routlt": "~1.0"
     },
     "require-dev": {
-        "appserver-io/build": "0.2.*",
-        "appserver-io-psr/epb": "0.4.*",
-        "appserver-io-psr/servlet": "0.8.*",
-        "appserver-io-psr/naming": "0.2.*",
-        "appserver-io-psr/mop": "0.1.*",
-        "appserver-io/phar" : "0.1.*"
+        "appserver-io/build": "~1.0",
+        "appserver-io-psr/epb": "~1.0",
+        "appserver-io-psr/servlet": "~1.0",
+        "appserver-io-psr/naming": "~1.0",
+        "appserver-io-psr/mop": "~1.0",
+        "appserver-io/phar" : "~1.0"
     },
     "config": {
         "vendor-dir": "src/vendor"
