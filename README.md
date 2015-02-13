@@ -9,7 +9,7 @@ This app makes use of this functionality as a showcase example to further expand
 
 ## Installation
 
-To do this, we assume you have installed appserver.io in a version of at least 1.0.0-rc2.
+To do this, we assume you have installed appserver.io in a version of at least 1.0.0-rc3.
 
 You also need the sources of this repository. So clone it, open a commandline, change into your 
 working  directory, which can be `/tmp` for example, and enter:
