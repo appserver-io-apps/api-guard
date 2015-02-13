@@ -33,6 +33,8 @@ use AppserverIo\Apps\ApiGuard\Entities\User;
  * @link      http://www.appserver.io
  *
  * @Singleton
+ * 
+ * @Startup
  */
 class UserProcessor extends AbstractProcessor
 {
