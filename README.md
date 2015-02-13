@@ -57,7 +57,8 @@ Have a look how we do it:
 
 ```php
 /**
- * Will create an instance of the $targetEntity class based on the data given as raw string
+ * Will create an instance of the $targetEntity class based on the data given as 
+ * raw string
  *
  * @param string $rawData      Data string to generate the instance from
  * @param string $targetEntity The fully qualified class name to create an instance from
@@ -144,14 +145,21 @@ The action used for our examples is the `create` action which is implemented as 
 /**
  * Action to create an instance
  *
- * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
- * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
+ * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  
+ *          The request instance
+ * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse 
+ *          The response instance
  *
  * @return null
  */
-public function createAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
-{
-    $instance = $this->connector->instanceFromString($servletRequest->getBodyStream(), static::TARGET_ENTITY);
+public function createAction(
+    HttpServletRequestInterface $servletRequest, 
+    HttpServletResponseInterface $servletResponse
+) {
+    $instance = $this->connector->instanceFromString(
+        $servletRequest->getBodyStream(), 
+        static::TARGET_ENTITY
+    );
     $proxy = $this->getProxy($servletRequest);
     $proxy->create($instance);
 }
@@ -172,7 +180,8 @@ We will do so within our AOP `Aspect` class `\AppserverIo\Apps\ApiGuard\Aspects\
 
 ```php
 /**
- * Aspect which is used to catch webservice DbC errors and respond to the client automatically
+ * Aspect which is used to catch webservice DbC errors and respond to 
+ * the client automatically
  *
  * @author    Bernhard Wick <bw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -199,10 +208,12 @@ class ExceptionHandlingAspect
     }
 
     /**
-     * Advice used to proceed a method but catch all Design by Contract related exceptions.
+     * Advice used to proceed a method but catch all Design by Contract 
+     * related exceptions.
      * Will react on any caught exception with an error response to the client
      *
-     * @param \AppserverIo\Psr\MetaobjectProtocol\Aop\MethodInvocationInterface $methodInvocation Initially invoked method
+     * @param \AppserverIo\Psr\MetaobjectProtocol\Aop\MethodInvocationInterface 
+     *          $methodInvocation Initially invoked method
      *
      * @return mixed
      *
@@ -219,7 +230,9 @@ class ExceptionHandlingAspect
             $messageObject->error = new \stdClass();
             $messageObject->error->code = 400;
             $messageObject->error->message = 'Invalid request data';
-            $message = $methodInvocation->getContext()->getConnector()->stringFromObject($messageObject);
+            $message = $methodInvocation->getContext()
+                ->getConnector()
+                ->stringFromObject($messageObject);
 
             // get the servlet response and set the error message
             $parameters = $methodInvocation->getParameters();
@@ -260,7 +273,12 @@ $ curl -X POST --data '{"password": "test", "email": "mail@mail.me"}' http://127
 
 Will return the message:
 ```json
-{error":{"code":400,"message":"Invalid request data"}}
+{
+    "error": {
+        "code": 400,
+        "message": "Invalidrequestdata"
+    }
+}
 ```
 
 as at least one of our constraints has been broken.
