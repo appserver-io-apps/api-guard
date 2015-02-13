@@ -189,8 +189,6 @@ We will do so within our AOP `Aspect` class `\AppserverIo\Apps\ApiGuard\Aspects\
  * @link      https://github.com/appserver-io-apps/api-guard
  * @link      http://www.appserver.io/
  *
- * @Stateless
- *
  * @Aspect
  */
 class ExceptionHandlingAspect
