@@ -65,6 +65,19 @@ abstract class AbstractEntity implements EntityInterface
      */
     public function jsonSerialize()
     {
+        $objectArray = $this->toArray();
+
+        $entityName = strtolower(ltrim(strrchr(get_class($this), '\\'), '\\'));
+        return array($entityName => $objectArray);
+    }
+
+    /**
+     * Will return an array representation of the object
+     *
+     * @return array
+     */
+    protected function toArray()
+    {
         $objectArray = array();
         foreach (get_object_vars($this) as $property => $value) {
             // collect all properties in an array, expect for consistency state, we do not need those being public
@@ -75,7 +88,6 @@ abstract class AbstractEntity implements EntityInterface
             $objectArray[$property] = $value;
         }
 
-        $entityName = strtolower(ltrim(strrchr(get_class($this), '\\'), '\\'));
-        return array($entityName => $objectArray);
+        return $objectArray;
     }
 }
