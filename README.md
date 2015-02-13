@@ -45,7 +45,7 @@ Any breach of a contract will result in an exception of the type `AppserverIo\Ps
 
 So to explain how we use these concepts we will have to have a look at the flow of data through our application.
 
-If a requests hits any of the actions we defined (more on that later) the request content will be passed to a connector class (`JSON` in our example) which tries to extract the needed information from the request message.
+If a request hits any of the actions we defined (more on that later) the request content will be passed to a connector class (`JSON` in our example) which tries to extract the needed information from the request message.
 
 As you can see in the example below we have used several annotations defining the following:
 
