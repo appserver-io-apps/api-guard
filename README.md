@@ -271,7 +271,7 @@ $ curl -X POST --data '{"password": "test", "username": "tester", "email": "mail
 $ curl -X POST --data '{"id": "f6e8f4c5073ee49d73e4a05b703c93de0e7bc321"}' http://127.0.0.1:9080/api-guard/index.do/users/get
 ```
 
-will return nothing besides the response status `200` as all constraints where met.
+will return a response status `200` as all constraints where met and a JSON representation of the user entity we have stored in our `Singleton Session Bean`.
 
 ## A final note
 
