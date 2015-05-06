@@ -4,3 +4,7 @@ build.properties
 /src/vendor
 composer.lock
 jmeter.log
+.buildpath
+.project
+.settings/
+
